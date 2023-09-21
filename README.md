@@ -28,12 +28,12 @@ ELOC_database/
     - The `connection_config.yaml` within the `config` directory is crucial for the application but is not provided in the repository for security reasons. To set it up:
         1. Navigate to the `config` directory.
         2. Create a new file named `connection_config.yaml`.
-        3. Add the necessary connection parameters. A sample structure might look like:
+        3. Add the necessary connection parameters. It should look like this:
            ```yaml
            access_key: YOUR_ACCESS_KEY
            secret_key: YOUR_SECRET_KEY
            ```
-        4. Save the file and ensure that it's referenced correctly in your application.
+        4. Save the file.
     - Make sure to **never commit** this file to any public repositories to keep your credentials secure.
 
 
