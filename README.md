@@ -36,11 +36,6 @@ ELOC_database/
         4. Save the file and ensure that it's referenced correctly in your application.
     - Make sure to **never commit** this file to any public repositories to keep your credentials secure.
 
-2. **Dependencies**: 
-    - Ensure you have the required Python packages installed, like `boto3`, `librosa`, and `pandas`. You can usually install these using pip:
-    ```bash
-    pip install boto3 librosa pandas
-    ```
 
 ## Usage
 
