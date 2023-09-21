@@ -5,7 +5,7 @@ codebase for the Eloc-Database to handle audio data processing and other related
 ## Directory Structure
 
 ```
-database/
+ELOC_database/
 │
 ├── config/
 │   └── connection_config.yaml      - Configuration file for establishing database connections (not included for security reasons).
