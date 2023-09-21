@@ -40,7 +40,7 @@ ELOC_database/
 ## Usage
 
 1. **Jupyter Notebooks**:
-    - Navigate to the `notebooks` directory to find notebooks like `trim_tangkahan.ipynb` and `trim_sagah.ipynb`. 
+    - Navigate to the `notebooks` directory to find notebooks like `trim_tangkahan.ipynb` and `trim_sabah.ipynb`. 
     - You can run these notebooks to process and trim audio data specific to Tangkahan and Sagah respectively.
 
 2. **Amazon S3 Utilities**:
