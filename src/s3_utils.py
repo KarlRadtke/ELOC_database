@@ -4,18 +4,14 @@ import warnings
 import librosa
 import pandas as pd
 import yaml
+import soundfile as sf
 
 
 
 def create_s3_client(config_path='config/connection_config.yaml'):
     '''
-    Creates and returns an S3 client using credentials stored in a YAML configuration file.
+    Create S3 client (boto3.Session.client) from  YAML configuration file
 
-    Args:
-        config_path (str): Path to the YAML file containing the AWS credentials.
-
-    Returns:
-        boto3.Session.client: An S3 client configured with the specified credentials.
     '''
     # Load the S3 credentials from a YAML file
     try:
@@ -42,21 +38,10 @@ def create_s3_client(config_path='config/connection_config.yaml'):
         return None
 
 
-
+    
 def download_s3_object_to_memory(bucket_name: str, object_key: str, client: boto3.client) -> io.BytesIO:
     """
-    Downloads an object from an S3 bucket and returns its contents as a BytesIO object.
-
-    Parameters:
-    bucket_name (str): The name of the S3 bucket.
-    object_key (str): The key of the S3 object to download.
-    client (boto3.client): The S3 client to be used for the download.
-
-    Returns:
-    io.BytesIO: The contents of the S3 object as a BytesIO object.
-
-    Raises:
-    UserWarning: If the object cannot be downloaded from the bucket.
+    Download an object from S3 bucket and return as a BytesIO object.
     """
     try:
         object_bytes = io.BytesIO()
@@ -94,7 +79,8 @@ def read_audio_fromS3(audio_file_path, bucket_name, client):
         return None
 
     try:
-        audio_data, sr = librosa.load(audio_bytes, sr=None)
+        audio_data, sr = sf.read(audio_bytes)
+        print(audio_file_path)
         return audio_data, sr
     except Exception as e:
         warning_message = f"Failed to load audio: {audio_file_path}. Exception message: {e}"
@@ -127,6 +113,7 @@ def read_selection_table_fromS3(selection_table_path, bucket_name, client):
 
     try:
         selection_table = pd.read_csv(selection_table_bytes, sep='\t')
+        print(selection_table_path)
         return selection_table
     except Exception as e:
         warning_message = f"Failed to load selection table: {selection_table_path}. Exception message: {e}"
@@ -140,3 +127,22 @@ def read_selection_table_fromS3(selection_table_path, bucket_name, client):
     
     
 # Define a function to trim audio file
+def trim_audio_file(audio_data, onset_time, offset_time, sr):
+    """
+    Trims an audio data array based on the given onset and offset times.
+
+    Parameters:
+    audio_data (numpy.ndarray): The audio data to be trimmed.
+    onset_time (float): The onset time in seconds.
+    offset_time (float): The offset time in seconds.
+    sr (int): The sampling rate of the audio data.
+
+    Returns:
+    numpy.ndarray: The trimmed audio data array.
+
+    Raises:
+    None
+    """
+    onset_sample = librosa.time_to_samples(onset_time, sr=sr)
+    offset_sample = librosa.time_to_samples(offset_time, sr=sr)
+    return audio_data[onset_sample:offset_sample]
