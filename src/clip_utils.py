@@ -66,7 +66,7 @@ def extract_and_upload_clips(
         
         # upload to S3
         with io.BytesIO() as audio_file:
-            sf.write(audio_file, clip, sr, format='WAV', subtype='PCM_24')
+            sf.write(audio_file, clip, sr, format='WAV', subtype='PCM_16')
             audio_file.seek(0)
             client.upload_fileobj(
                 audio_file, 
